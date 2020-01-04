@@ -1,12 +1,12 @@
-# name: Flow Control
-# on: push
+name: Flow Control
+on: push
 
-# jobs:
-#     job1:
-#         name: Greeting 1
-#         runs-on: ubuntu-latest
-#         steps:
-#             - run: echo "Hello, World 1"
+jobs:
+    job1:
+        name: Greeting 1
+        runs-on: ubuntu-latest
+        steps:
+            - run: echo "Hello, World 1"
 #     job2:
 #         name: Greeting 2
 #         runs-on: ubuntu-latest

@@ -8,4 +8,4 @@ jobs:
     steps:
       - uses: actions/checkout@v1
       - run: composer install
-      - run: tree -L 2 .
+      - run: composer run test

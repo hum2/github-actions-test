@@ -1,0 +1,11 @@
+name: phpunit
+on: [push]
+
+jobs:
+  build:
+    name: test
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v1
+      - run: composer install
+      - run: tree -L 2 .

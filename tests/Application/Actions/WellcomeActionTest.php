@@ -19,6 +19,6 @@ class WellcomeActionTest extends TestCase
 
         $payload = (string) $response->getBody();
 
-        $this->assertEquals('Hello world!!', $payload);
+        $this->assertEquals('Hello world!', $payload);
     }
 }

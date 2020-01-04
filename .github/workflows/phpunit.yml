@@ -6,6 +6,16 @@ jobs:
     name: test
     runs-on: ubuntu-latest
     steps:
+      - name: Checkout
       - uses: actions/checkout@v1
+      - name: Installing PHP
+        uses: shivammathur/setup-php@master
+        with:
+          php-version: 7.4
+          extension-csv: mbstring, xdebug
+      - name: Install Composer 
       - run: composer install
+      - name: Output PHP Version
+      - run: php -v
+      - name: Run unit test
       - run: composer run test

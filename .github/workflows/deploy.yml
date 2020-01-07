@@ -32,7 +32,7 @@ jobs:
       # - name: Optimize for Production
       #   run: composer run optimize
       - name: Generate ssh key
-        run: echo ”$SSH_PRIVATE_KEY” > key ＆＆ chmod 600 key
+        run: echo ”$SSH_PRIVATE_KEY” > key && chmod 600 key
         env:
           SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
       - name: Sync source

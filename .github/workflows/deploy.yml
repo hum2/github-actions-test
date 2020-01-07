@@ -11,10 +11,6 @@ jobs:
     name: deploy
     runs-on: ubuntu-latest
     steps:
-      - name: Generate ssh key
-        run: echo ”$SSH_PRIVATE_KEY” > key ＆＆ chmod 600 key
-        env:
-          SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
       - name: Install PHP
         uses: shivammathur/setup-php@master
         with:
@@ -35,6 +31,10 @@ jobs:
         run: composer install
       # - name: Optimize for Production
       #   run: composer run optimize
+      - name: Generate ssh key
+        run: echo ”$SSH_PRIVATE_KEY” > key ＆＆ chmod 600 key
+        env:
+          SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
       - name: Sync source
         run: rsync -rptDvz --delete --exclude-from=.rsyncignore -e "ssh -i key -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no" ./ $USER_NAME@$SERVER_NAME:$PRODUCTION_PATH
         env:

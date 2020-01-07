@@ -1,0 +1,11 @@
+.coveralls.yml
+.git
+.github
+.gitignore
+.rsyncignore
+.travis.yml
+CONTRIBUTING.md
+docker-compose.yml
+phpunit.xml
+README.md
+tests

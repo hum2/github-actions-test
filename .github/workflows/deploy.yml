@@ -1,0 +1,43 @@
+name: deploy
+on:
+  push:
+    branches:
+      - master
+    tags:
+      - "!*"
+
+jobs:
+  build:
+    name: deploy
+    runs-on: ubuntu-latest
+    steps:
+      - name: Generate ssh key
+        run: echo ”$SSH_PRIVATE_KEY” > key ＆＆ chmod 600 key
+        env:
+          SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
+      - name: Install PHP
+        uses: shivammathur/setup-php@master
+        with:
+          php-version: 7.3
+      - name: Checkout
+        uses: actions/checkout@v1
+      - name: Get Composer Cache Directory
+        id: composer-cache
+        run: |
+          echo "::set-output name=dir::$(composer config cache-files-dir)"
+      - uses: actions/cache@v1
+        with:
+          path: ${{ steps.composer-cache.outputs.dir }}
+          key: ${{ runner.os }}-composer-${{ hashFiles('**/composer.lock') }}
+          restore-keys: |
+            ${{ runner.os }}-composer-
+      - name: Install PHP Packages
+        run: composer install
+      # - name: Optimize for Production
+      #   run: composer run optimize
+      - name: Sync source
+        run: rsync -rptDvz --delete --exclude-from=.rsyncignore -e "ssh -i key -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no" ./ $USER_NAME@$SERVER_NAME:$PRODUCTION_PATH
+        env:
+          SERVER_NAME: ${{ secrets.SERVER_NAME }}
+          USER_NAME: ${{ secrets.USER_NAME }}
+          PRODUCTION_PATH: ${{ secrets.PRODUCTION_PATH }}

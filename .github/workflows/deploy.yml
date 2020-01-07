@@ -32,8 +32,10 @@ jobs:
       # - name: Optimize for Production
       #   run: composer run optimize
       - name: Generate ssh key
-        run: echo ”$SSH_PRIVATE_KEY” > key && chmod 600 key
+        run: echo "$SSH_PRIVATE_KEY" > key && chmod 600 key
         env:
           SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
       - name: Sync source
-        run: rsync -rptDvz --delete --exclude-from=.rsyncignore -e "ssh -i key -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no" ./ root@150.95.153.109:/var/www/slim.hum2.jp
+        run: rsync -rptDvz --delete --exclude-from=.rsyncignore -e "ssh -i key -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no" ./ $DESTINATION
+        env:
+          DESTINATION: ${{ secrets.DESTINATION }}

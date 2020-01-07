@@ -36,4 +36,4 @@ jobs:
         env:
           SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
       - name: Sync source
-        run: rsync -rptDvz --delete --exclude-from=.rsyncignore -e "ssh -i key -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no" ./ "root@150.95.153.109:/var/www/slim.hum2.jp"
+        run: rsync -rptDvz --delete --exclude-from=.rsyncignore -e "ssh -i key -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no" ./ root@150.95.153.109:/var/www/slim.hum2.jp
